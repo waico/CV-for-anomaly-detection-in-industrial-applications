@@ -22,7 +22,10 @@ _______
 - Problem 2: We need footage of electric infrastructure. Such footage is available in abundance on Youtube from people who ride trains. An excerpt from this video is decomposed into its frames. For the training datasets, a subset of frames obtained in (1) needs to be segmented manually to serve as ground-truth images.
 _______
 ## References
-- Problem 1:  
+- Problem 1:
+
+[Journal "IEEE Transactions on Instrumentation and Measurement"](https://ieeexplore.ieee.org/xpl/aboutJournal.jsp?punumber=19)
+
 1. [Defect Identification From MFL Images in Pipeline Inspection Using Convolutional Neural Network](https://ieeexplore.ieee.org/abstract/document/7878530?casa_token=v8fBoUaNFNsAAAAA:RGckea71AAcnLfNQe_vbXwjShEcaXELcaWurOf2P9RAzqycMb_RpU2A9gX09uAW-6KLIqpir-9tS4A)
 2. [Machine Learning Techniques for the Analysis of Magnetic Flux Leakage Images in Pipeline Inspection](https://ieeexplore.ieee.org/document/5170224)
 3. [Oil Pipeline Weld Defect Identification System Based on Convolutional Neural Network](http://itiis.org/digital-library/23389)
