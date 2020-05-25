@@ -1,5 +1,7 @@
 # CV for anomaly detection in industrial applications
 [course google docs page](https://docs.google.com/document/d/1Kfa2MqIbNjHhnIZh8IsWokxnxm_1fJlOVxl7n_KqTJg/edit)
+
+[Projects: expectations and grading](https://skoltech.instructure.com/courses/2471/discussion_topics/11936)
 _______
 ## Project description 
 Anomaly detection problems have a great importance in industrial applications, because anomalies usually represent faults, failures or the emergence of such. To detect these automatically, we propose deep learning algorithms for anomaly / fault detection and their classification. We develop an algorithm achieving
