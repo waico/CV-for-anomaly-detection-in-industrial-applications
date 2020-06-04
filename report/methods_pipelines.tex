@@ -1,6 +1,5 @@
 \section{METHODS PIPELINES}
 \label{METHODS PIPELINES}
-
 \subsection{Raw data}
 Example of the MFL data is shown in Fig.~\ref{ris:data_example}.
 
@@ -28,6 +27,8 @@ They are:
 	\item Inaccurate annotations, e.g. missed defect, wrong defect location, etc.
 \end{enumerate}
 
+In addition to preprocessing, data were annotated for the segmentation task.
+
 \subsubsection{Sensors malfunctions problem}
 To deal with sensors malfunctions we suppose to fill the gaps (zeroed values) with values calculated by different methods:
 \begin{enumerate}
@@ -36,6 +37,11 @@ To deal with sensors malfunctions we suppose to fill the gaps (zeroed values) wi
 	\item Abnormal values are equal to the mean of normal values over the column.
 	\item Abnormal values are equal to the mean of neighboring sensors over the column.
 	\item Abnormal values are equal to the interpolation results over the column.
+	\item Replacing Abnormal values to NaN and rerange in accordance  skimage procedure 
+	\item Rerange initial set of values to 0...255 uint8 range.
+	\item Rerange initial set of values to 0...1 float range.
+	
+	
 \end{enumerate}
 The results of all applied methods are presented in Fig.~\ref{ris:filling_example}.
 \begin{figure}[ht]
@@ -45,7 +51,16 @@ The results of all applied methods are presented in Fig.~\ref{ris:filling_exampl
 \end{figure}
 
 \subsubsection{Displaced origins problem}
-The problem is solved by setting the coordinates of the welds in the data to the same position as in the report.
+
+Since the data on the location of the robot did not match the defect location data from the report, it was necessary to merge the data. The key factor here turned out to be that the values of signal from magnetic flux sensors grow at the weld site, see picture \ref{ris:prepr}. 
+
+\begin{figure}[!h]
+	\center{\includegraphics[width=0.7\linewidth]{pictures/prepr.png}}
+	\caption{Location of weld. Black vertical line in accordance with defect location data from the report. Others lines are values from sensors.}
+	\label{ris:prepr}
+\end{figure}
+The locations of maxima of these values have been founded and then combined with welds locations.
+
 
 \subsubsection{Inaccurate annotations problem}
 
