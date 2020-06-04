@@ -1,4 +1,7 @@
 # CV for anomaly detection in industrial applications
+
+[google collab with the code for defects detection and image classification](https://colab.research.google.com/drive/1BSZOj8-NeIxofuGNUZ56Y_IU4hMNR8U-?usp=sharing)
+
 [course google docs page](https://docs.google.com/document/d/1Kfa2MqIbNjHhnIZh8IsWokxnxm_1fJlOVxl7n_KqTJg/edit)
 
 [Projects: expectations and grading](https://skoltech.instructure.com/courses/2471/discussion_topics/11936)
