@@ -1,2 +1,49 @@
 \section{RESULTS PIPELINES}
 \label{RESULTS PIPELINES}
+
+\begin{table}[!htb]
+	\caption{\label{tab:comp1}Comparison of performance among different classification methods for binary classification problem}
+	\begin{center}
+		\small
+		\begin{tabular}{| l | c | c | c |}
+			\hline
+			Method & $\hat{y}=y=0$ (normal) & $\hat{y}=y=1$ (defect/weld)  & Average \\
+			\hline
+			CNN-2 & 95.55 & 82.08 & 89.88 \\
+			CNN-5 & 97.95 & \textbf{91.51} & \textbf{95.24} \\
+			CNN-5+LRN & \textbf{98.29} & 89.86 & 94.74 \\
+			\hline
+			\multicolumn{4}{|c|}{Filling techniques comparison}  \\
+			\hline
+			CNN-5 (filling 1)  & 97.95 & \textbf{91.51} & \textbf{95.24}\\
+			CNN-5 (filling 2)  & 97.95 & 84.20 & 92.16 \\
+			CNN-5 (filling 3)  & 97.26 & 83.02 & 91.27 \\
+			CNN-5 (filling 4)  & \textbf{98.63} & 81.13 & 91.27 \\
+			CNN-5 (filling 5)  & 98.12 & 81.84 & 91.27 \\
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+\begin{table}[!htb]
+	\caption{\label{tab:comp2}Comparison of performance among different classification methods for multiclass classification problem}
+	\begin{center}
+		\small
+		\begin{tabular}{| l | c | c | c | c |}
+			\hline
+			Method & $\hat{y}=y=0$ (normal) & $\hat{y}=y=1$ (defect) & $\hat{y}=y=2$ (weld)   & Average \\
+			\hline
+			CNN-2 & 95.55 & 82.08 & 89.88 &  \\
+			CNN-5 & \textbf{97.95} & \textbf{91.51} & \textbf{95.24} &  \\
+			\hline
+			\multicolumn{5}{|c|}{Filling techniques comparison}  \\
+			\hline
+			CNN-5 (filling 1)  & 97.95 & \textbf{91.51} & \textbf{95.24} & \\
+			CNN-5 (filling 2)  & 97.95 & 84.20 & 92.16 &  \\
+			CNN-5 (filling 3)  & 97.26 & 83.02 & 91.27 &  \\
+			CNN-5 (filling 4)  & \textbf{98.63} & 81.13 & 91.27 &  \\
+			CNN-5 (filling 5)  & 98.12 & 81.84 & 91.27 &  \\
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table}
