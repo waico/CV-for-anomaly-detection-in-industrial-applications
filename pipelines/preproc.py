@@ -13,28 +13,36 @@ def get_df(df, dataset_num=5):
         df.index-=10.215
     return df
  
-def crop_squares_with_defects(df, defects):
+def crop_squares_with_defects(df, defects, centering=True, scaling = True):
 
     pictures_with_defects = []
     for NUMBER in tnrange(len(defects)):
 
-        a = defects.iloc[[NUMBER]]['Distance, m'].iloc[0] - 0.2
-        b = a + 0.4
-
-        # searching min value for distance and sensors
-        # select working sensors
-        working_sensors = df[(df.index >= a) & (df.index <= b)].mean()
-        working_sensors = working_sensors[working_sensors>2800].dropna().index
-        # find indices with min values for both axis
-        dist = df[working_sensors][(df.index >= a) & (df.index <= b)].min(axis=1).idxmin()
-        index_dist = np.where(df.index == dist)[0][0]
+        loc = defects.iloc[[NUMBER]]['Distance, m'].iloc[0]
+        if centering:
+            a = loc - 0.2
+            b = a + 0.4
+            # searching min value for distance and sensors
+            # select working sensors
+            working_sensors = df[(df.index >= a) & (df.index <= b)].mean()
+            working_sensors = working_sensors[working_sensors>2800].dropna().index
+            # find indices with min values for both axis
+            loc = df[working_sensors][(df.index >= a) & (df.index <= b)].min(axis=1).idxmin()
+        else:
+            loc = df.index[df.index <= loc][-1]
+        index_dist = np.where(df.index == loc)[0][0]
 
         picture = df.iloc[index_dist - 32:index_dist + 32].T
-        picture = np.nan_to_num(MinMaxScaler().fit_transform(picture[picture>2000]) / 2 + 0.5)
-        pictures_with_defects.append(picture / picture.max())
+        if scaling:
+            picture = np.nan_to_num(MinMaxScaler().fit_transform(picture[picture>2000]) / 2 + 0.5)
+            picture = picture / picture.max()
+        else:
+            picture = np.nan_to_num(picture[picture>2000])
+        pictures_with_defects.append(picture)
     return pictures_with_defects
     
-def crop_squares_with_welds(df, journal, defects):
+
+def crop_squares_with_welds(df, journal, defects, centering=True, scaling = True):
     
     defected_welds = defects[defects['Defect location'] == 'Сварной шов']['Distance, m']
     
@@ -42,30 +50,41 @@ def crop_squares_with_welds(df, journal, defects):
     pictures_with_normal_welds = []
     for NUMBER in tnrange(len(journal)):
 
-        a = journal.iloc[[NUMBER]]['Location of the section beginning, m'].iloc[0] - 0.2
-        b = a + 0.4
-
-        # searching min value for distance and sensors
-        # select working sensors
-        working_sensors = df[(df.index >= a) & (df.index <= b)].mean()
-        working_sensors = working_sensors[working_sensors>2800].dropna().index
-        # find indices with min values for both axis
-        dist = df[working_sensors][(df.index >= a) & (df.index <= b)].min(axis=1).idxmin()
-        index_dist = np.where(df.index == dist)[0][0]
+        loc = journal.iloc[[NUMBER]]['Location of the section beginning, m'].iloc[0]
+        if centering:
+            a = loc - 0.2
+            b = a + 0.4
+            # searching min value for distance and sensors
+            # select working sensors
+            working_sensors = df[(df.index >= a) & (df.index <= b)].mean()
+            working_sensors = working_sensors[working_sensors>2800].dropna().index
+            # find indices with min values for both axis
+            loc = df[working_sensors][(df.index >= a) & (df.index <= b)].min(axis=1).idxmin()
+        else:
+            loc = df.index[df.index <= loc][-1]
+        index_dist = np.where(df.index == loc)[0][0]
         
 #        welds_dict[NUMBER] = df.iloc[index_dist - 32:index_dist + 32]
-        is_defected = [1 if (i>dist-0.5) and (i<=dist+0.5) else 0 for i in defected_welds]
+        is_defected = [1 if (i>loc-0.5) and (i<=loc+0.5) else 0 for i in defected_welds]
         if 1 in is_defected:
             picture = df.iloc[index_dist - 32:index_dist + 32].T
-            picture = np.nan_to_num(MinMaxScaler().fit_transform(picture[picture>2000]) / 2 + 0.5)
-            pictures_with_defected_welds.append(picture / picture.max())
+            if scaling:
+                picture = np.nan_to_num(MinMaxScaler().fit_transform(picture[picture>2000]) / 2 + 0.5)
+                picture = picture / picture.max()
+            else:
+                picture = np.nan_to_num(picture[picture>2000])
+            pictures_with_defected_welds.append(picture)
         else:
             picture = df.iloc[index_dist - 32:index_dist + 32].T
-            picture = np.nan_to_num(MinMaxScaler().fit_transform(picture[picture>2000]) / 2 + 0.5)
-            pictures_with_normal_welds.append(picture / picture.max())
+            if scaling:
+                picture = np.nan_to_num(MinMaxScaler().fit_transform(picture[picture>2000]) / 2 + 0.5)
+                picture = picture / picture.max()
+            else:
+                picture = np.nan_to_num(picture[picture>2000])
+            pictures_with_normal_welds.append(picture)
     return pictures_with_normal_welds, pictures_with_defected_welds
     
-def crop_squares_with_normal(df, journal, defects):
+def crop_squares_with_normal(df, journal, defects, scaling = True):
     
     # we select sections without defects
     sections_without_defects = list(set(journal['№ of the section']) - set(defects['№ of the section']))
@@ -82,8 +101,12 @@ def crop_squares_with_normal(df, journal, defects):
             index_dist = np.where(df.index > a)[0][0]
             
             picture = df.iloc[index_dist - 32:index_dist + 32].T
-            picture = np.nan_to_num(MinMaxScaler().fit_transform(picture[picture>2000]) / 2 + 0.5)
-            normal_pictures.append(picture / picture.max())
+            if scaling:
+                picture = np.nan_to_num(MinMaxScaler().fit_transform(picture[picture>2000]) / 2 + 0.5)
+                picture = picture / picture.max()
+            else:
+                picture = np.nan_to_num(picture[picture>2000])
+            normal_pictures.append(picture)
             
             a = df.index[index_dist + 65]
             i += 1

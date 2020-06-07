@@ -1,6 +1,14 @@
 \section{RESULTS PIPELINES}
 \label{RESULTS PIPELINES}
 
+We present the results of comparison for different preprocessing techniques and different CNN architectures for binary classification (normal pipe wall or defect/weld) in Tab.~\ref{tab:comp1} and multiclass classification problem (normal pipe wall, defect or weld) in Tab.~\ref{tab:comp2}.
+
+Batch size is equal to 64, so the input to the network has shape (64, 1, 64, 64).
+For all experiments, we use Adam optimizer with initial learning rate 0.001 and learning rate scheduler with parameters: threshold = 0.0001, factor = 0.5, min lr = 0.0001, patience = 484.
+Also, for all experiments, the number of epochs is equal to 12.
+Dropout rate for all experiments is equal to 0.33.
+All mentioned parameters were selected by using grid search procedure.
+
 \begin{table}[!htb]
 	\caption{\label{tab:comp1}Comparison of performance among different classification methods for binary classification problem}
 	\begin{center}
@@ -15,15 +23,35 @@
 			\hline
 			\multicolumn{4}{|c|}{Filling techniques comparison}  \\
 			\hline
-			CNN-5 (filling 1)  & 97.95 & \textbf{91.51} & \textbf{95.24}\\
-			CNN-5 (filling 2)  & 97.95 & 84.20 & 92.16 \\
-			CNN-5 (filling 3)  & 97.26 & 83.02 & 91.27 \\
-			CNN-5 (filling 4)  & \textbf{98.63} & 81.13 & 91.27 \\
-			CNN-5 (filling 5)  & 98.12 & 81.84 & 91.27 \\
+			CNN-5 (filling 1) & 97.95 & \textbf{91.51} & \textbf{95.24} \\
+			CNN-5 (filling 2) & 97.95 & 84.20 & 92.16 \\
+			CNN-5 (filling 3) & 97.26 & 83.02 & 91.27 \\
+			CNN-5 (filling 4) & \textbf{98.63} & 81.13 & 91.27 \\
+			CNN-5 (filling 5) & 98.12 & 81.84 & 91.27 \\
+			\hline
+			\multicolumn{4}{|c|}{Centering influence for the first filling method} \\
+			\hline
+			CNN-5 (centered) & 97.95 & \textbf{91.51} & 95.24 \\
+			CNN-5 (not centered) & \textbf{98.46} & 91.27 & \textbf{95.44} \\
+			CNN-2 (centered) & 95.55 & 82.08 & 89.88 \\
+			CNN-2 (not centered) & 96.92 & 80.42 & 89.81 \\
+			\hline
+			\multicolumn{4}{|c|}{Image min-max normalization vs Whole dataset min-max normalization} \\
+			\hline
+			CNN-5 (centered) &  & &  \\
+			CNN-5 (not centered) &   &  &  \\
+			CNN-2 (centered) &  &  &  \\
+			CNN-2 (not centered) &  &  &  \\
 			\hline
 		\end{tabular}
 	\end{center}
 \end{table}
+
+Filling methods were researched for binary classification problem.
+Centering means using peaks (extremums) searching procedure for welds or defects correct coordinates defining.
+The centering procedure was research both for binary and multiclass classification problems.
+Moreover, Min-Max normalization using either a single image or whole dataset was investigated.
+Finally, CNN-2 and CNN-5 were compared for centered images with the first filling method using single image Min-Max normalization.
 
 \begin{table}[!htb]
 	\caption{\label{tab:comp2}Comparison of performance among different classification methods for multiclass classification problem}
@@ -31,18 +59,28 @@
 		\small
 		\begin{tabular}{| l | c | c | c | c |}
 			\hline
-			Method & $\hat{y}=y=0$ (normal) & $\hat{y}=y=1$ (defect) & $\hat{y}=y=2$ (weld)   & Average \\
+			Method & $\hat{y}=y=0$ (normal) & $\hat{y}=y=1$ (defect) & $\hat{y}=y=2$ (weld) & Average \\
 			\hline
-			CNN-2 & 95.55 & 82.08 & 89.88 &  \\
-			CNN-5 & \textbf{97.95} & \textbf{91.51} & \textbf{95.24} &  \\
+			CNN-2 & 97.60 & 59.86 & 92.91 & 90.97 \\
+			CNN-5 & \textbf{98.12} & \textbf{76.76} & \textbf{98.23} & \textbf{95.14} \\
 			\hline
-			\multicolumn{5}{|c|}{Filling techniques comparison}  \\
+			\multicolumn{5}{|c|}{Centering influence for the first filling method}  \\
 			\hline
-			CNN-5 (filling 1)  & 97.95 & \textbf{91.51} & \textbf{95.24} & \\
-			CNN-5 (filling 2)  & 97.95 & 84.20 & 92.16 &  \\
-			CNN-5 (filling 3)  & 97.26 & 83.02 & 91.27 &  \\
-			CNN-5 (filling 4)  & \textbf{98.63} & 81.13 & 91.27 &  \\
-			CNN-5 (filling 5)  & 98.12 & 81.84 & 91.27 &  \\
+			CNN-5 (centered) & \textbf{98.12} & \textbf{85.21} & 75.18 & 89.88 \\
+			CNN-5 (not centered) &  \textbf{98.12} & 76.76 & \textbf{98.23} & \textbf{95.14} \\
+			CNN-2 (centered) & 96.75 & 71.13 & 52.13 & 80.65 \\
+			CNN-2 (not centered) & 97.60 & 59.86 & 92.91 & 90.97 \\
+			\hline
+			\multicolumn{5}{|c|}{Single image min-max normalization vs Whole dataset min-max normalization}  \\
+			\hline
+			CNN-5 (1) (whole) & 97.95 & 64.08 & \textbf{99.65} & 93.65 \\
+			CNN-5 (1) (image) &  98.12 & \textbf{76.76} & 98.23 & \textbf{95.14} \\
+			CNN-2 (1) (whole) & \textbf{99.32} & 13.38 & 96.45 & 86.41 \\
+			CNN-2 (1) (image) & 97.60 & 59.86 & 92.91 & 90.97 \\
+			CNN-5 (3) (whole) & 99.66 & 81.69 & 99.65 & 97.12 \\
+%			CNN-5 (3) (image) &  98.12 & \textbf{76.76} & 98.23 & \textbf{95.14} \\
+			CNN-2 (3) (whole) & 95.72 & 13.38 & 97.52 & 89.58 \\
+%			CNN-2 (3) (image) & 97.60 & 59.86 & 92.91 & 90.97 \\
 			\hline
 		\end{tabular}
 	\end{center}
