@@ -3,22 +3,29 @@
 
 \subsection{Pipelines defects diagnostics}
 
-Magnetic Flux Leakage (MFL) technique is the most common approach for oil and gas pipelines nondestructive diagnostics.
-The data obtained in the pipeline inspection process is primarily analyzed by traditional machine learning (ML) methods.
+Magnetic Flux Leakage (MFL) technique is the most common approach for oil and gas pipelines nondestructive testing.
+The data obtained during the pipeline inspection process is primarily analyzed by traditional machine learning (ML) methods.
 A comparison of performance among different ML methods for defects identification problem is presented in \cite{Khodayari-Rostamabad2009}.
 The main challenge for this approach is creating informative and important features that will be used as an input for ML methods.
 Usually, these diagnostics features are generated using expert knowledge and manually-created heuristics.
 It imposes the limitation on defects detection problem solving quality.
 A variety of most successful features is presented and analyzed in details in \cite{Slesarev2017}.
 
-To automate the process of feature generation Convolutional Neural Networks (CNNs) can be used.
-As an advantage, they can solve the defects detection task and at the same time.
-In literature there are samples of applying CNNs for defects detection \cite{Feng2017}, welds defect detection \cite{2020a}, welds detection and defects detection and classification \cite{Yang2020}, defect size estimation \cite{Lu2019}.
+Deep Learning showed significant progress and achieved incredible results in numerous applications, just in the past few years.
+The image classification problem is one of the most successful applications of DL and Convolutional Neural Networks (CNNs) in particular.
+To automate the process of feature generation in MFL data analysis, CNNs can be used either.
+As an advantage, they can solve the defects detection and segmentation tasks at the same time.
+In literature there are examples of applying CNNs for defects detection \cite{Feng2017}, welds defect detection \cite{2020a}, welds and defects classification \cite{Yang2020}, defect size estimation \cite{Lu2019}.
 For all mentioned applications, CNNs outperformed existing traditional approaches.
-Since DL relatively recently showed great progress in their results achievements, there are just a few works dedicated to MFL data analysis using DL.
+Nevertheless, still, there are just a few works dedicated to MFL data analysis using DL.
+A number of particular problems that can be solved using a novel approach are not covered yet.
 For instance, we could not find any works on applying CNNs to defects segmentation task, despite the importance of this problem solving according to \cite{Feng2017}.
-In this work, we want to solve two different tasks:
+
+In this work, we want to research two different problems:
 \begin{enumerate}
 	\item Defects detection (Picture classification task).
-	\item Defects segmentation (Instance segmentation task).
+	\item Defects segmentation (Semantic segmentation task).
 \end{enumerate}
+
+For their solving, we propose CNNs of different architectures and compare their results with existing state-of-the-art approaches.
+Moreover, we research different preprocessing techniques for dealing with typical issues in the MFL data.
