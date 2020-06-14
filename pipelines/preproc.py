@@ -47,7 +47,7 @@ def crop_squares_with_welds(df, journal, defects, centering=True, scaling = True
     defected_welds = defects[defects['Defect location'] == 'Сварной шов']['Distance, m']
     
     pictures_with_defected_welds = []
-    pictures_with_normal_welds = []
+    pictures_with_healthy_welds = []
     for NUMBER in tnrange(len(journal)):
 
         loc = journal.iloc[[NUMBER]]['Location of the section beginning, m'].iloc[0]
@@ -81,20 +81,20 @@ def crop_squares_with_welds(df, journal, defects, centering=True, scaling = True
                 picture = picture / picture.max()
             else:
                 picture = np.nan_to_num(picture[picture>2000])
-            pictures_with_normal_welds.append(picture)
-    return pictures_with_normal_welds, pictures_with_defected_welds
+            pictures_with_healthy_welds.append(picture)
+    return pictures_with_healthy_welds, pictures_with_defected_welds
     
-def crop_squares_with_normal(df, journal, defects, scaling = True):
+def crop_squares_with_healthy(df, journal, defects, scaling = True):
     
     # we select sections without defects
     sections_without_defects = list(set(journal['№ of the section']) - set(defects['№ of the section']))
-    normal_journal = journal[journal['№ of the section'].isin(sections_without_defects)]
+    healthy_journal = journal[journal['№ of the section'].isin(sections_without_defects)]
 
-    normal_pictures = []
+    healthy_pictures = []
     for NUMBER in tnrange(len(sections_without_defects)-1):
 
-        start = normal_journal.iloc[[NUMBER]]['Location of the section beginning, m'].iloc[0] + 0.2
-        end = start + normal_journal.iloc[[NUMBER]]['Section length, m'].iloc[0] - 0.2
+        start = healthy_journal.iloc[[NUMBER]]['Location of the section beginning, m'].iloc[0] + 0.2
+        end = start + healthy_journal.iloc[[NUMBER]]['Section length, m'].iloc[0] - 0.2
         a = start
         i = 0
         while (i < 10):
@@ -106,18 +106,18 @@ def crop_squares_with_normal(df, journal, defects, scaling = True):
                 picture = picture / picture.max()
             else:
                 picture = np.nan_to_num(picture[picture>2000])
-            normal_pictures.append(picture)
+            healthy_pictures.append(picture)
             
             a = df.index[index_dist + 65]
             i += 1
-    return normal_pictures
+    return healthy_pictures
     
-def train_test_saving(pictures, kind='normal'):
+def train_test_saving(pictures, kind='healthy'):
     '''kind: str
-    normal, defect, normal_weld, defected_weld '''
-    classes = {'normal':'class_001/',
+    healthy, defect, healthy_weld, defected_weld '''
+    classes = {'healthy':'class_001/',
               'defect':'class_002/',
-              'normal_weld':'class_003/',
+              'healthy_weld':'class_003/',
               'defected_weld':'class_004/',}
     name_train = '../../data/train/'+classes[kind]
     name_test = '../../data/test/'+classes[kind]

@@ -1,18 +1,21 @@
 \section{CONCLUSION}
 \label{CONCLUSION}
 %TODO magnetographic image
-Today, manual analysis of a magnetographic image is a bottleneck for the diagnosis of pipeline transport, since it costs a lot of money and is limited by human resources. This study allows us to hope that this process can be fully automated, which is likely to make the analysis more reliable, faster and cheaper.
+Today, manual analysis of a magnetographic image is being a bottleneck for the diagnosis of pipelines, since it costs a lot of money and is limited by human resources.
+This study allows us to hope that this process can be fully automated, which is likely to make the analysis more reliable, faster and cheaper.
 
 %Insulators and oil pipelines are known to be an important component of the energy transmission systems. Yet on the other hand they are exposed to electrical, mechanical, and environmental stresses leading to different kind of defection. In this study, we focused on investigating approaches based on the deep learning techniques to detect and classify defected insulators and detect the defects in pipelines. In doing so, we utilized state-of-art CNNs such as UNets and VGG modified to match the task in hand. Multiple improvement of the existing literature were offered in this project. In spite of the previous works in the literature which were focused on a particular failure mode or defect of insulators, we had three different defects namely, insulators with: broken, burned and missing cap. The results showed successful performance of the trained UNet in segmentation task of insulators and the trained VGG as the second stage network in reaching a proper accuracy while classifying insulators into the possible considered classes. 
-Also, the network (CNN-5) that outperformed currently used CNNs for defect detection of pipelines was proposed. Moreover, we proposed a modified UNet for defects of pipelines segmentation. The results of segmentation show the applicability of the proposed UNet for the size of defects evaluation. The results of the experiments prove that all parts of the oil pipeline diagnostics process can be fully automated with high quality.
+The network (CNN-5) that outperformed currently used CNNs for defect detection of pipelines was proposed.
+Moreover, we proposed a modified UNet for defects of pipelines segmentation.
+The results of segmentation show the applicability of the proposed UNet for the size of defects evaluation.
+The results of the experiments prove that all parts of the oil pipeline diagnostics process can be fully automated with high quality.
 
 Finally, there can be defined several project development options:
 \begin{enumerate}
-	\item better preprocessing, including manual pictures selection;
-	\item multiclass defects classification;
-	\item defected welds detection;
-	\item applying some common archictures like VGG or ResNet;
-	\item adding layers to the last Convolutional layer for defect depth evaluation;
-	\item investigate the repeatability of the results for different datasets;
-	\item using separate dataset for results evaluation.
+	\item increasing sizes of the datasets;
+	\item improving preprocessing procedures, including manual pictures selection;
+	\item multiclass defects classification for pipelines dataset;
+	\item defected and healthy welds classification for pipelines dataset;
+	\item defect depth evaluation for pipelines dataset;
+	\item investigate the repeatability of the results for similar datasets.
 \end{enumerate}
