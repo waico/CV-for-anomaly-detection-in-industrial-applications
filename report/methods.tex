@@ -17,7 +17,7 @@ Attached to the dataset technical report contains information about welds and de
 	\caption{Dataset characteristics.}
 	\begin{center}
 		\small
-		\begin{tabular}{  c | c   }
+		\begin{tabular}{|  c | c   |}
 			\hline
 			Parameter & Value \\
 			\hline
@@ -28,7 +28,8 @@ Attached to the dataset technical report contains information about welds and de
 			Min value & 0 \\
 			Max value & 4095 \\
 			Mean value &   \\
-			Number of defects/welds & 745/1462 \\
+			Number of defects & 745 \\
+			Number of welds (with defects) & 1462 (34) \\
 			\hline
 		\end{tabular}
 		\label{tab:dataset}
@@ -59,16 +60,7 @@ Additionaly, we will consider values less than 2000 abnormal and replace them wi
 	\item Abnormal values are equal to the mean of normal values over the column. Then Min-Max scaling.
 	\item Abnormal values are equal to the mean of neighboring sensors over the column. Then Min-Max scaling.
 	\item Abnormal values are equal to the interpolation results over the column. Then Min-Max scaling.
-	\item Rerange initial set of values to 0...255 uint8 range.
-	\item Rerange initial set of values to 0...1 float range \\ 
-	(Fig.~\ref{ris:preproc_fun}). Such a specific function due to the range of normal operation of the sensor from 2500 to 3500 units.
 \end{enumerate}
-
-\begin{figure}[ht]
-	\center{\includegraphics[scale=0.42]{pictures/preproc_fun.png}}
-	\caption{The function for converting the initial values of signal to the input of network}
-	\label{ris:preproc_fun}
-\end{figure}
 
 The results of all applied methods are presented in Fig.~\ref{ris:filling_example}.
 \begin{figure}[ht]
@@ -89,15 +81,6 @@ Since the ILI tool location data did not match the defect location data from the
 \end{figure}
 The solution was to find the locations of the maxima of sensors data values and then to combine it with the weld coordinates.
 
-\subsubsection{Manual annotations for the segmentation task}
-Since there was no annotated data for the segmentation problem, it was necessary to annotate it manually (Figure \ref{ris:annot}). The characteristics of the obtained dataset can be seen in Table~\ref{tab:alg1}.
-
-\begin{figure}[ht]
-	\center{\includegraphics[scale=0.70]{pictures/annot.png}}
-	\caption{The methodology for obtaining the mask}
-	\label{ris:annot}
-\end{figure}
-
 \subsubsection{Inaccurate annotations problem}
 This problem is a common one for oil and gas pipeline nondestructive testing \cite{Khodayari-Rostamabad2009}.
 It appears to be a lot of missing defects that affect the quality of the problem.
@@ -115,9 +98,9 @@ Applied augmentations details are presented in \cite{buslaev2020albumentations} 
 	\caption{Applied augmentations.}
 	\begin{center}
 		\small
-		\begin{tabular}{ c | c | c  }
+		\begin{tabular}{| c | c | c |}
 			\hline
-			Augmentation Types & Pipelines (welds) & Pipelines (defects) \\
+			Augmentation Type & Welds & Defects \\
 			\hline
 			Rotate90 &  - & \checkmark \\
 			Rotate180 & \checkmark & \checkmark \\
@@ -143,25 +126,24 @@ Examples of augmentations are shown in Fig.~\ref{ris:aug_example}.
 \end{figure}
 
 
-The characteristics of the pipeline defects dataset are described in Table \ref{tab:alg1}, where * symbol indicates a random call function 5 and 6 from the defects augmentation list, so the exact number is unknown.
+The characteristics of the pipeline defects dataset are described in Table \ref{tab:alg1}.
 \begin{table}[!htb]
 	\caption{\label{tab:alg1}Dataset size for pipeline defects detection and segmentation problems}
 	\begin{center}
 		\small
-		\begin{tabular}{ c | c  c  c | c  c }
-			\multicolumn{1}{c}{} & \multicolumn{3}{c}{Classification} & \multicolumn{2}{c}{Segmentation} \\
+		\begin{tabular}{| c | c  c  c |}
 			\hline
-			Data & Healthy & Defect & Weld & Healthy & Defect \\
+			Data & Healthy & Defect & Weld \\
 			\hline
-			\multicolumn{6}{c}{Before augmentation}  \\
+			\multicolumn{4}{|c|}{Before augmentation}  \\
 			\hline
-			Train  & 11106 & 569 & 1130 & 181 & 450 \\
-			Validation & 584 & 142 & 282 & 33 & 111 \\
+			Train  & 11106 & 569 & 1130 \\
+			Validation & 584 & 142 & 282 \\
 			\hline
-			\multicolumn{6}{c}{After augmentation}  \\
+			\multicolumn{4}{|c|}{After augmentation}  \\
 			\hline
-			Train  & 11106 & 8535 & 11300 & * & * \\
-			Validation & 584 & 142 & 282 & * & * \\
+			Train  & 11106 & 8535 & 11300 \\
+			Validation & 584 & 142 & 282 \\
 			\hline
 		\end{tabular}
 	\end{center}
@@ -171,7 +153,7 @@ The characteristics of the pipeline defects dataset are described in Table \ref{
 \label{METHODS}
 Pipeline defect detection is composed of two problems. First, the defect should be detected, and further, it should be evaluated using segmentation results.
 We propose here a novel CNN architecture for image classification.
-Additionally, we present the existing architectures that achieve best results in the MFL and X-ray data classification problems.
+Additionally, we present the existing architectures that achieve the best results in the MFL and X-ray data classification problems.
 
 \subsection{CNN Preliminaries}
 
@@ -206,7 +188,7 @@ From now on this CNN is marked as CNN-5.
 	\label{ris:CNN_our}
 \end{figure}
 
-\subsection{Performance metrics}
+\subsection{Performance metric}
 For the classification problem we use Accuracy.
 Accuracy is defined by the formula:
 \begin{equation}

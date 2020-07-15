@@ -13,7 +13,7 @@ def get_df(df, dataset_num=5):
         df.index-=10.215
     return df
  
-def crop_squares_with_defects(df, defects, centering=True, scaling = True):
+def crop_squares_with_defects(df, defects, centering=True, scaling='local'):
 
     pictures_with_defects = []
     for NUMBER in tnrange(len(defects)):
